@@ -6,6 +6,7 @@
  *         "coming soon" placeholder instead (never a fake link).
  * Video:  a YouTube link (unlisted is fine) or a file in /public such as
  *         'videos/disaster-responder.mp4'. `null` hides the demo button.
+ *         `videoLabel` optionally renames the button (e.g. for a narrated demo).
  * Status: 'completed' | 'in-progress'
  */
 
@@ -107,6 +108,7 @@ export const projects = [
     github: 'https://github.com/Aakifah09/enterprise-rag-assistant',
     demo: null,
     video: 'videos/enterprise-rag-assistant.mp4',
+    videoLabel: 'narrated demo',
   },
   {
     title: 'Generative AI Solution Lab',

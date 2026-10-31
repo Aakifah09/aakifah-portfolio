@@ -16,6 +16,19 @@ function youtubeId(url) {
 
 function VideoPlayer({ url, title, autoPlay = false }) {
   const id = youtubeId(url);
+  const videoRef = useRef(null);
+
+  // Start with sound (some demos are narrated). The click that opened the dialog usually allows it;
+  // if the browser still blocks audible autoplay, fall back to muted so the video at least starts.
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!autoPlay || !v) return;
+    v.play().catch(() => {
+      v.muted = true;
+      v.play().catch(() => {});
+    });
+  }, [autoPlay]);
+
   return (
     <div className="aspect-video w-full overflow-hidden rounded-[1.4rem] bg-black">
       {id ? (
@@ -27,8 +40,7 @@ function VideoPlayer({ url, title, autoPlay = false }) {
           className="h-full w-full"
         />
       ) : (
-        // the recordings have no sound, so muted autoplay is allowed by every browser
-        <video src={url} controls playsInline muted autoPlay={autoPlay} preload="metadata" className="h-full w-full">
+        <video ref={videoRef} src={url} controls playsInline preload="metadata" className="h-full w-full">
           Your browser can&rsquo;t play this video.
         </video>
       )}
@@ -206,7 +218,7 @@ export default function Projects() {
                     {project.video && (
                       <button type="button" onClick={() => show(i, true)} className={iconLink} aria-label={`Play ${project.title} demo video`}>
                         <Play className="h-3.5 w-3.5 fill-current" aria-hidden="true" />
-                        demo
+                        {project.videoLabel ?? 'demo'}
                       </button>
                     )}
                     <span className="ml-auto grid h-9 w-9 shrink-0 place-items-center rounded-full bg-ink text-night transition-transform duration-300 group-hover:rotate-45">
