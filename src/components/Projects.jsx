@@ -14,20 +14,21 @@ function youtubeId(url) {
   return m?.[1];
 }
 
-function VideoPlayer({ url, title }) {
+function VideoPlayer({ url, title, autoPlay = false }) {
   const id = youtubeId(url);
   return (
     <div className="aspect-video w-full overflow-hidden rounded-[1.4rem] bg-black">
       {id ? (
         <iframe
-          src={`https://www.youtube-nocookie.com/embed/${id}?rel=0`}
+          src={`https://www.youtube-nocookie.com/embed/${id}?rel=0${autoPlay ? '&autoplay=1&mute=1' : ''}`}
           title={`${title} demo video`}
-          allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen"
           allowFullScreen
           className="h-full w-full"
         />
       ) : (
-        <video src={url} controls playsInline preload="metadata" className="h-full w-full">
+        // the recordings have no sound, so muted autoplay is allowed by every browser
+        <video src={url} controls playsInline muted autoPlay={autoPlay} preload="metadata" className="h-full w-full">
           Your browser can&rsquo;t play this video.
         </video>
       )}
@@ -102,13 +103,13 @@ function ProjectDialog({ project, index, focusVideo, onClose }) {
           type="button"
           onClick={onClose}
           aria-label="Close project"
-          className="absolute left-6 top-6 z-10 grid h-10 w-10 place-items-center rounded-full bg-black/50 text-ink hover:bg-black/70"
+          className="absolute -right-3 -top-3 z-10 grid h-10 w-10 place-items-center rounded-full border border-white/10 bg-[#15121e] text-ink shadow-lg hover:bg-[#221e2e]"
         >
           <X className="h-5 w-5" />
         </button>
         {project.video ? (
           <div ref={videoRef}>
-            <VideoPlayer url={project.video} title={project.title} />
+            <VideoPlayer url={project.video} title={project.title} autoPlay={focusVideo} />
           </div>
         ) : (
           <Art project={project} index={index} large />

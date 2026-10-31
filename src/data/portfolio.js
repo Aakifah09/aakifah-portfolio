@@ -94,7 +94,7 @@ export const projects = [
     status: 'completed',
     github: 'https://github.com/Aakifah09/disaster-responder',
     demo: null,
-    video: null,
+    video: 'videos/disaster-responder.mp4',
   },
   {
     title: 'Enterprise Knowledge Assistant',
@@ -106,7 +106,7 @@ export const projects = [
     status: 'completed',
     github: 'https://github.com/Aakifah09/enterprise-rag-assistant',
     demo: null,
-    video: null,
+    video: 'videos/enterprise-rag-assistant.mp4',
   },
   {
     title: 'Generative AI Solution Lab',
@@ -118,7 +118,7 @@ export const projects = [
     status: 'completed',
     github: 'https://github.com/Aakifah09/genai-solution-lab',
     demo: null,
-    video: null,
+    video: 'videos/genai-solution-lab.mp4',
   },
   {
     title: 'Agentic AI Recruiter',
@@ -130,7 +130,7 @@ export const projects = [
     status: 'completed',
     github: 'https://github.com/Aakifah09/agentic-ai-recruiter',
     demo: null,
-    video: null,
+    video: 'videos/agentic-ai-recruiter.mp4',
   },
   {
     title: 'mltest',
@@ -142,7 +142,7 @@ export const projects = [
     status: 'completed',
     github: 'https://github.com/Aakifah09/ml-testing-framework',
     demo: null,
-    video: null,
+    video: 'videos/ml-testing-framework.mp4',
   },
   {
     title: 'Invoice & Barcode Automation',
