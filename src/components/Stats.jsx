@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { animate, useInView, useReducedMotion } from 'framer-motion';
 import { experience, ongoingResearch, projects, publications, skills } from '../data/portfolio.js';
+import { pastel } from './ui/palette.js';
 
 // Every number is derived from portfolio.js, so it stays true as the data changes.
 const stats = [
@@ -24,21 +25,20 @@ function Counter({ value, suffix }) {
   }, [inView, reduce, value]);
 
   return (
-    <span ref={ref} className="relative inline-block font-alt text-[69px] font-bold leading-none text-accent">
+    <span ref={ref} className="accent text-6xl leading-none sm:text-7xl">
       {display}
-      {/* superscript suffix, positioned so it doesn't shift the number's baseline */}
-      {suffix && <span className="absolute -right-5 top-0 font-sans text-[28px] font-black text-white">{suffix}</span>}
+      {suffix}
     </span>
   );
 }
 
 export default function Stats() {
   return (
-    <section aria-label="At a glance" className="py-10 sm:py-16">
-      <dl className="mx-auto grid max-w-[1140px] grid-cols-2 gap-y-12 px-5 text-center sm:px-8 lg:grid-cols-4">
-        {stats.map((s) => (
-          <div key={s.label} className="flex flex-col-reverse">
-            <dt className="mt-3 text-[11px] font-black uppercase tracking-[0.1rem]">{s.label}</dt>
+    <section aria-label="At a glance" className="py-6">
+      <dl className="mx-auto grid max-w-6xl grid-cols-2 gap-4 px-5 sm:px-8 lg:grid-cols-4">
+        {stats.map((s, i) => (
+          <div key={s.label} className="flex flex-col-reverse rounded-[1.75rem] px-6 py-8 text-center" style={{ background: pastel(i).bg, color: pastel(i).ink }}>
+            <dt className="mt-3 text-sm font-semibold text-ink/70">{s.label}</dt>
             <dd>
               <Counter value={s.value} suffix={s.suffix} />
             </dd>

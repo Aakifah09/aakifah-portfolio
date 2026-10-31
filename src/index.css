@@ -1,20 +1,24 @@
 @import 'tailwindcss';
 
-/* Unfold-inspired theme: pure black, Raleway, a single crimson accent. */
+/* Soft pastel theme: warm off-white, dreamy lavender/peach/mint blobs, rounded glass cards. */
 @theme {
-  --font-sans: 'Raleway', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --font-alt: 'Arimo', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-serif: 'Instrument Serif', ui-serif, Georgia, serif;
 
-  --color-accent: #d63447;
-  --color-ink: #000000;
-  --color-ink-2: #121212;
-  --color-panel: #212121;
-  --color-rule: #222222;
+  --color-cream: #fbfaf8;
+  --color-ink: #1f1d2b;
+  --color-muted: #6b6878;
+  --color-lavender: #c9b8ff;
+  --color-lavender-deep: #6d55d9;
+  --color-peach: #ffc4ac;
+  --color-mint: #b4e6cf;
+  --color-sky: #b8ceff;
+  --color-butter: #ffe08f;
+  --color-rose: #f8bcdd;
 }
 
 html {
   scroll-behavior: smooth;
-  color-scheme: dark;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -23,76 +27,66 @@ html {
   }
 }
 
-body {
-  font-weight: 300;
-  line-height: 1.9;
-  /* Raleway defaults to old-style figures, which make "09" read like "o9". */
-  font-variant-numeric: lining-nums;
-}
-
 ::selection {
-  background: var(--color-accent);
-  color: #fff;
+  background: var(--color-lavender);
+  color: var(--color-ink);
 }
 
-/* The three vertical guide lines that run behind every section. */
-.lines-inner {
-  border-left: 1px solid var(--color-rule);
-  border-right: 1px solid var(--color-rule);
+/* Serif italic accent word inside sans headlines: "building <em>intelligent</em> software". */
+.accent {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: 0;
 }
-.lines-inner::before {
-  content: '';
+
+/* Frosted glass card used across sections. */
+.glass {
+  background: rgb(255 255 255 / 0.62);
+  border: 1px solid rgb(255 255 255 / 0.9);
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 0.8) inset,
+    0 18px 50px -24px rgb(76 56 140 / 0.28);
+  backdrop-filter: blur(18px) saturate(1.4);
+  -webkit-backdrop-filter: blur(18px) saturate(1.4);
+}
+
+/* Slowly drifting gradient blobs. A radial gradient instead of filter: blur() keeps them cheap to animate. */
+@keyframes drift {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  33% { transform: translate3d(4%, -6%, 0) scale(1.08); }
+  66% { transform: translate3d(-5%, 4%, 0) scale(0.95); }
+}
+.blob {
   position: absolute;
-  inset: 0 33.3333%;
-  border-left: 1px solid var(--color-rule);
-  border-right: 1px solid var(--color-rule);
+  border-radius: 9999px;
+  background: radial-gradient(circle, var(--blob) 0%, color-mix(in srgb, var(--blob) 45%, transparent) 40%, transparent 70%);
+  opacity: 0.85;
+  animation: drift 22s ease-in-out infinite;
+  will-change: transform;
 }
 
-/* Nav link underline that grows on hover / when active. */
-.nav-underline {
-  position: relative;
+/* Gentle bob for the hero's floating cards. */
+@keyframes bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
 }
-.nav-underline::before {
-  content: '';
-  position: absolute;
-  left: 0.45rem;
-  bottom: 0.2rem;
-  height: 1px;
-  width: 0;
-  background: currentColor;
-  transition: width 0.2s ease-in-out;
-}
-.nav-underline:hover::before,
-.nav-underline[aria-current='true']::before {
-  width: calc(100% - 0.9rem);
+.bob {
+  animation: bob 6s ease-in-out infinite;
 }
 
-/* The sticky nav drops in from above once the hero is passed. */
-@keyframes nav-drop {
-  from { transform: translateY(-100%); }
-  to { transform: translateY(0); }
+/* Infinite tool marquee. */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
 }
-.nav-drop {
-  animation: nav-drop 0.35s ease-out;
+.marquee {
+  animation: marquee 40s linear infinite;
 }
-
-/* Hero "mouse" scroll cue. */
-@keyframes finger {
-  0% { opacity: 1; }
-  100% { opacity: 0; transform: translateY(20px); }
-}
-.mouse-scroll {
-  animation: finger 2s infinite;
-}
-
-/* Project tile overlays: hover on pointer devices, always visible on touch. */
-@media (hover: none) {
-  .tile-overlay {
-    opacity: 1 !important;
-  }
+.marquee-mask {
+  mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .mouse-scroll,
-  .nav-drop { animation: none; }
+  .blob, .bob, .marquee { animation: none; }
 }

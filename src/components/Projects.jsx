@@ -1,44 +1,37 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { ArrowUpRight, Link2, X } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, X } from 'lucide-react';
 import { projects } from '../data/portfolio.js';
 import Button from './ui/Button.jsx';
+import Reveal from './ui/Reveal.jsx';
 import Section from './ui/Section.jsx';
-import Wipe from './ui/Wipe.jsx';
 import { GithubIcon } from './ui/icons.jsx';
+import { pastel } from './ui/palette.js';
 
-// Muted tints so each generated cover reads as its own "photo".
-const tints = ['#5a1620', '#123a3f', '#4a3512', '#22224d', '#3d1240', '#183d22'];
-
-// Generated cover art: the project's pipeline drawn as a node diagram.
-function Cover({ project, index }) {
-  const tint = tints[index % tints.length];
+// Pastel header art: soft blob + the project's pipeline as little chips.
+function Art({ project, index, large = false }) {
+  const p = pastel(index);
   return (
-    <div
-      className="relative aspect-[4/3] w-full transition-transform duration-300 ease-out group-hover:scale-[1.09] group-focus-visible:scale-[1.09]"
-      style={{ background: `linear-gradient(140deg, ${tint} 0%, #0c0c0c 72%)` }}
-    >
-      <div
+    <div className={`relative overflow-hidden rounded-[1.4rem] ${large ? 'h-64 sm:h-72' : 'h-44'}`} style={{ background: p.bg }}>
+      <span
         aria-hidden="true"
-        className="absolute inset-0 opacity-[0.08]"
-        style={{ backgroundImage: 'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)', backgroundSize: '32px 32px' }}
+        className="absolute -right-10 -top-12 h-48 w-48 rounded-full blur-2xl transition-transform duration-700 group-hover:scale-125"
+        style={{ background: p.blob }}
       />
-      <ol aria-hidden="true" className="absolute left-7 top-7 space-y-3 sm:left-9 sm:top-9">
+      <span aria-hidden="true" className="absolute -bottom-16 -left-8 h-40 w-40 rounded-full bg-white/70 blur-2xl" />
+      <span className="accent absolute right-5 top-3 text-5xl leading-none" style={{ color: p.ink, opacity: 0.35 }} aria-hidden="true">
+        {String(index + 1).padStart(2, '0')}
+      </span>
+      <ol aria-hidden="true" className="absolute inset-x-5 bottom-5 flex flex-wrap items-center gap-1.5">
         {project.pipeline.map((step, i) => (
-          <li key={step} className="relative flex items-center gap-3 font-alt text-[11px] uppercase tracking-[0.14em] text-white/75">
-            <span className={`h-2 w-2 shrink-0 rounded-full ${i === project.pipeline.length - 1 ? 'bg-accent' : 'border border-white/60'}`} />
-            {step}
-            {i < project.pipeline.length - 1 && <span className="absolute left-[3.5px] top-[14px] h-3 w-px bg-white/30" />}
+          <li key={step} className="flex items-center gap-1.5">
+            <span className="rounded-full bg-white/80 px-2.5 py-1 text-[11px] font-semibold" style={{ color: p.ink }}>
+              {step}
+            </span>
+            {i < project.pipeline.length - 1 && <ArrowRight className="h-3 w-3" style={{ color: p.ink }} />}
           </li>
         ))}
       </ol>
-      <span
-        aria-hidden="true"
-        className="absolute -bottom-6 right-4 font-alt text-[9rem] font-bold leading-none text-transparent sm:text-[11rem]"
-        style={{ WebkitTextStroke: '1px rgb(255 255 255 / 0.14)' }}
-      >
-        {String(index + 1).padStart(2, '0')}
-      </span>
     </div>
   );
 }
@@ -63,45 +56,50 @@ function ProjectDialog({ project, index, onClose }) {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       onClick={onClose}
-      className="fixed inset-0 z-[80] grid place-items-center overflow-y-auto bg-black/85 p-4 backdrop-blur-sm"
+      className="fixed inset-0 z-[80] grid place-items-center overflow-y-auto bg-ink/25 p-4 backdrop-blur-md"
     >
       <motion.div
         role="dialog"
         aria-modal="true"
         aria-labelledby="project-title"
-        initial={{ y: 40, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        exit={{ y: 40, opacity: 0 }}
-        transition={{ duration: 0.4, ease: [0.21, 0.47, 0.32, 0.98] }}
+        initial={{ y: 30, opacity: 0, scale: 0.97 }}
+        animate={{ y: 0, opacity: 1, scale: 1 }}
+        exit={{ y: 30, opacity: 0, scale: 0.97 }}
+        transition={{ duration: 0.35, ease: [0.21, 0.47, 0.32, 0.98] }}
         onClick={(e) => e.stopPropagation()}
-        className="relative w-full max-w-3xl bg-ink-2 shadow-[0_30px_0_-20px_var(--color-accent)]"
+        className="relative w-full max-w-2xl rounded-[2rem] bg-white p-3 shadow-2xl shadow-lavender-deep/20"
       >
         <button
           ref={closeRef}
           type="button"
           onClick={onClose}
           aria-label="Close project"
-          className="absolute right-4 top-4 z-10 grid h-10 w-10 place-items-center rounded-full bg-black/60 text-white hover:bg-white hover:text-black"
+          className="absolute left-6 top-6 z-10 grid h-10 w-10 place-items-center rounded-full bg-white/85 text-ink shadow-sm hover:bg-white"
         >
           <X className="h-5 w-5" />
         </button>
-        <div className="overflow-hidden">
-          <Cover project={project} index={index} />
-        </div>
-        <div className="p-7 sm:p-10">
-          <p className="font-alt text-xs uppercase tracking-[0.1rem] text-white/50">{project.subtitle}</p>
-          <h3 id="project-title" className="mt-2 text-3xl font-black">
+        <Art project={project} index={index} large />
+        <div className="px-4 pb-5 pt-7 sm:px-7">
+          <p className="text-sm font-semibold" style={{ color: pastel(index).ink }}>
+            {project.subtitle}
+          </p>
+          <h3 id="project-title" className="mt-1.5 text-3xl font-bold tracking-tight">
             {project.title}
           </h3>
-          <p className="mt-5 text-white/75">{project.description}</p>
-          <p className="mt-6 font-alt text-[11px] font-bold uppercase tracking-[0.1rem] text-white/50">Built with</p>
-          <p className="mt-1 text-white">{project.tech.join(', ')}</p>
+          <p className="mt-4 leading-relaxed text-muted">{project.description}</p>
+          <ul className="mt-6 flex flex-wrap gap-2">
+            {project.tech.map((t) => (
+              <li key={t} className="rounded-full border border-ink/10 px-3 py-1 text-xs font-semibold text-ink/80">
+                {t}
+              </li>
+            ))}
+          </ul>
           <div className="mt-8 flex flex-wrap gap-3">
             <Button href={project.github} icon={GithubIcon} external disabledLabel="Code not public yet">
-              View on GitHub
+              view on github
             </Button>
-            <Button href={project.demo} variant="accent" icon={ArrowUpRight} external disabledLabel="Demo coming soon">
-              Live demo
+            <Button href={project.demo} variant="light" icon={ArrowUpRight} external disabledLabel="Demo coming soon">
+              live demo
             </Button>
           </div>
         </div>
@@ -112,38 +110,55 @@ function ProjectDialog({ project, index, onClose }) {
 
 export default function Projects() {
   const [openIndex, setOpenIndex] = useState(null);
+  const lastOpened = useRef(null);
   const triggerRefs = useRef([]);
 
-  const close = () => {
-    const i = openIndex;
-    setOpenIndex(null);
-    // return focus to the tile that opened the dialog
-    requestAnimationFrame(() => triggerRefs.current[i]?.focus());
+  const open = (i) => {
+    lastOpened.current = i;
+    setOpenIndex(i);
   };
 
+  const close = useCallback(() => {
+    setOpenIndex(null);
+    // return focus to the card that opened the dialog
+    requestAnimationFrame(() => triggerRefs.current[lastOpened.current]?.focus());
+  }, []);
+
   return (
-    <Section id="projects" title="Projects">
-      <ul className="grid gap-6 sm:grid-cols-2 sm:gap-7">
+    <Section
+      id="projects"
+      eyebrow="selected work"
+      title={
+        <>
+          Things I&rsquo;ve <em className="accent text-lavender-deep">built</em>
+        </>
+      }
+      intro="AI applications, retrieval systems and engineering projects — tap any card for the full story."
+    >
+      <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {projects.map((project, i) => (
-          <li key={project.title}>
-            <Wipe delay={(i % 2) * 0.15}>
+          <li key={project.title} className="flex">
+            <Reveal delay={(i % 3) * 0.08} className="flex w-full">
               <button
                 ref={(el) => (triggerRefs.current[i] = el)}
                 type="button"
-                onClick={() => setOpenIndex(i)}
+                onClick={() => open(i)}
                 aria-haspopup="dialog"
-                className="group relative block w-full overflow-hidden text-left focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
+                className="glass group flex w-full flex-col rounded-[1.75rem] p-2.5 text-left transition-all duration-300 hover:-translate-y-1.5 hover:bg-white/90 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-lavender-deep"
               >
-                <Cover project={project} index={i} />
-                <span className="tile-overlay absolute inset-0 bg-black/50 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100">
-                  <Link2 className="absolute right-5 top-5 h-5 w-5" aria-hidden="true" />
-                  <span className="absolute inset-x-5 bottom-5">
-                    <span className="block text-lg font-bold">{project.title}</span>
-                    <span className="block font-alt text-xs text-white/50">{project.tech.slice(0, 4).join(', ').toLowerCase()}</span>
+                <Art project={project} index={i} />
+                <span className="flex flex-1 flex-col px-3 pb-3 pt-5">
+                  <span className="text-lg font-bold leading-snug">{project.title}</span>
+                  <span className="mt-1 text-sm text-muted">{project.subtitle}</span>
+                  <span className="mt-auto flex items-center justify-between gap-3 pt-5">
+                    <span className="text-xs font-semibold text-muted">{project.tech.slice(0, 3).join(' · ')}</span>
+                    <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-ink text-white transition-transform duration-300 group-hover:rotate-45">
+                      <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                    </span>
                   </span>
                 </span>
               </button>
-            </Wipe>
+            </Reveal>
           </li>
         ))}
       </ul>

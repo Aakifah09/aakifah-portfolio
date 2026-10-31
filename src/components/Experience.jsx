@@ -1,6 +1,7 @@
 import { experience } from '../data/portfolio.js';
 import Reveal from './ui/Reveal.jsx';
 import Section from './ui/Section.jsx';
+import { pastel } from './ui/palette.js';
 
 const initialsOf = (name) =>
   name
@@ -10,41 +11,63 @@ const initialsOf = (name) =>
     .slice(0, 2)
     .toUpperCase();
 
-// Styled after Unfold's testimonial cards: dark panel, crimson offset shadow, round badge overlapping the bottom edge.
 export default function Experience() {
   return (
-    <Section id="experience" title="Experience">
-      <ul className="grid gap-16 lg:grid-cols-2 lg:gap-10">
-        {experience.map((job, i) => (
-          <li key={job.company} className="flex">
-            <Reveal delay={i * 0.12} className="flex w-full flex-col">
-              <div className="relative z-[1] flex-1 bg-panel px-7 pb-16 pt-9 shadow-[0_30px_0_-20px_var(--color-accent)] sm:px-11 sm:pt-11">
-                <span aria-hidden="true" className="block font-[Georgia,serif] text-[80px] leading-[0.6] text-white/90">
-                  &ldquo;
-                </span>
-                <ul className="mt-4 space-y-3 text-[15px] leading-[1.75] text-white/80">
-                  {job.points.map((p) => (
-                    <li key={p.slice(0, 30)} className="flex gap-3">
-                      <span aria-hidden="true" className="mt-[0.85em] h-px w-3 shrink-0 bg-accent" />
-                      <span>{p}</span>
-                    </li>
-                  ))}
-                </ul>
-                <p className="mt-6 font-alt text-xs text-white/45">{job.tech.join(' · ')}</p>
-              </div>
-              <div className="relative z-[2] -mt-[45px] text-center">
-                <span className="mx-auto mb-6 grid h-[90px] w-[90px] place-items-center rounded-full border-4 border-black bg-white font-black text-2xl text-black">
-                  {initialsOf(job.company)}
-                </span>
-                <h3 className="text-xl font-bold leading-tight">{job.role}</h3>
-                <p className="mt-1 text-xs text-white/50">
-                  {job.company} · {job.period}
-                </p>
-              </div>
-            </Reveal>
-          </li>
-        ))}
-      </ul>
+    <Section
+      id="experience"
+      eyebrow="experience"
+      title={
+        <>
+          Where I&rsquo;ve <em className="accent text-lavender-deep">worked</em>
+        </>
+      }
+    >
+      <ol className="space-y-5">
+        {experience.map((job, i) => {
+          const p = pastel(i + 1);
+          return (
+            <li key={job.company}>
+              <Reveal delay={i * 0.08}>
+                <article className="glass grid gap-6 rounded-[2rem] p-6 sm:p-9 md:grid-cols-[220px_1fr] md:gap-10">
+                  <div className="flex items-center gap-4 md:flex-col md:items-start">
+                    {job.logo ? (
+                      <span className="grid h-16 min-w-16 shrink-0 place-items-center rounded-2xl bg-white px-3 shadow-sm ring-1 ring-ink/5">
+                        <img src={job.logo} alt={`${job.company} logo`} className="max-h-11 w-auto max-w-[150px] object-contain" loading="lazy" />
+                      </span>
+                    ) : (
+                      <span className="grid h-14 w-14 shrink-0 place-items-center rounded-2xl text-lg font-bold" style={{ background: p.bg, color: p.ink }}>
+                        {initialsOf(job.company)}
+                      </span>
+                    )}
+                    <div>
+                      <p className="font-bold">{job.company}</p>
+                      <p className="mt-0.5 text-sm text-muted">{job.period}</p>
+                    </div>
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-bold tracking-tight">{job.role}</h3>
+                    <ul className="mt-4 space-y-2.5 leading-relaxed text-muted">
+                      {job.points.map((pt) => (
+                        <li key={pt.slice(0, 30)} className="flex gap-3">
+                          <span aria-hidden="true" className="mt-[0.55em] h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: p.ink }} />
+                          <span>{pt}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    <ul className="mt-6 flex flex-wrap gap-1.5">
+                      {job.tech.map((t) => (
+                        <li key={t} className="rounded-full px-3 py-1 text-xs font-semibold" style={{ background: p.bg, color: p.ink }}>
+                          {t}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </article>
+              </Reveal>
+            </li>
+          );
+        })}
+      </ol>
     </Section>
   );
 }

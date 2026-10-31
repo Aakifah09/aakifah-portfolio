@@ -1,18 +1,17 @@
 import { useState } from 'react';
-import { Check, Copy } from 'lucide-react';
+import { ArrowUpRight, Check, Copy, Mail, Send } from 'lucide-react';
 import { profile } from '../data/portfolio.js';
 import Reveal from './ui/Reveal.jsx';
-import Section from './ui/Section.jsx';
+import { Eyebrow } from './ui/Section.jsx';
+import { GithubIcon, LinkedinIcon } from './ui/icons.jsx';
 
-// Unfold's bottom-border-only inputs.
 const field =
-  'w-full border-0 border-b border-white/50 bg-transparent px-0 py-3 text-white placeholder:text-white/55 focus:border-white focus:outline-none focus:ring-0';
+  'w-full rounded-2xl border border-ink/10 bg-white/80 px-4 py-3.5 text-ink placeholder:text-muted/70 transition focus:border-lavender-deep focus:outline-none focus:ring-4 focus:ring-lavender/40';
 
-const info = [
-  { label: 'Email', value: profile.email, href: `mailto:${profile.email}` },
-  { label: 'GitHub', value: 'github.com/Aakifah09', href: profile.github, external: true },
-  { label: 'LinkedIn', value: 'in/aakifah-minhaj', href: profile.linkedin, external: true },
-  { label: 'Based in', value: 'Dubai, United Arab Emirates' },
+const links = [
+  { label: 'Email', value: profile.email, href: `mailto:${profile.email}`, icon: Mail },
+  { label: 'GitHub', value: 'github.com/Aakifah09', href: profile.github, icon: GithubIcon, external: true },
+  { label: 'LinkedIn', value: 'in/aakifah-minhaj', href: profile.linkedin, icon: LinkedinIcon, external: true },
 ];
 
 /*
@@ -43,64 +42,81 @@ export default function Contact() {
   };
 
   return (
-    <Section id="contact" title="Get In Touch">
-      <div className="grid gap-14 lg:grid-cols-[7fr_4fr] lg:gap-20">
-        <Reveal>
-          <p className="mb-8 max-w-xl text-white/75">
-            I&rsquo;m looking for internship opportunities in AI/ML, Generative AI, and software engineering. Send a note and it&rsquo;ll open in your email
-            app, pre-filled.
-          </p>
-          <form onSubmit={onSubmit} className="space-y-7">
-            <div className="grid gap-7 sm:grid-cols-2">
-              <label className="block">
-                <span className="sr-only">Name</span>
-                <input required name="name" value={form.name} onChange={update} placeholder="Name" autoComplete="name" className={field} />
-              </label>
-              <label className="block">
-                <span className="sr-only">Subject</span>
-                <input name="subject" value={form.subject} onChange={update} placeholder="Subject" className={field} />
-              </label>
-            </div>
-            <label className="block">
-              <span className="sr-only">Message</span>
-              <textarea required name="message" rows={6} value={form.message} onChange={update} placeholder="Write your message..." className={`${field} resize-y`} />
-            </label>
-            <button
-              type="submit"
-              className="inline-flex items-center justify-center rounded-full border-2 border-white/50 px-[30px] py-[15px] text-[11px] font-black uppercase tracking-[0.1rem] text-white transition-all duration-300 hover:border-white hover:bg-white hover:text-black focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
-            >
-              Send Message
-            </button>
-          </form>
-        </Reveal>
+    <section id="contact" className="scroll-mt-24 px-4 py-20 sm:py-28">
+      <Reveal>
+        <div className="relative mx-auto max-w-6xl overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-[#efe9ff] via-[#fdeaf4] to-[#ffeee6] px-6 py-14 sm:px-12 sm:py-16">
+          <span aria-hidden="true" className="absolute -left-16 -top-20 h-72 w-72 rounded-full bg-lavender blur-3xl" />
+          <span aria-hidden="true" className="absolute -bottom-24 right-0 h-72 w-72 rounded-full bg-peach blur-3xl" />
 
-        <Reveal delay={0.12}>
-          <dl className="space-y-7 text-center sm:text-left">
-            {info.map(({ label, value, href, external }) => (
-              <div key={label}>
-                <dt className="text-[11px] font-black uppercase tracking-[0.1rem] text-white/50">{label}</dt>
-                <dd className="mt-1 break-words text-xl">
-                  {href ? (
-                    <a href={href} {...(external && { target: '_blank', rel: 'noopener noreferrer' })} className="transition-colors hover:text-accent">
-                      {value}
+          <div className="relative grid gap-12 lg:grid-cols-[1fr_1.1fr] lg:gap-16">
+            <div>
+              <Eyebrow>get in touch</Eyebrow>
+              <h2 className="mt-5 text-4xl font-bold leading-[1.08] tracking-tight sm:text-5xl">
+                Let&rsquo;s build something <em className="accent text-lavender-deep">together</em>
+              </h2>
+              <p className="mt-5 text-lg leading-relaxed text-ink/70">
+                I&rsquo;m looking for internship opportunities in AI/ML, Generative AI, and software engineering. Say hi — I&rsquo;d love to hear
+                from you.
+              </p>
+
+              <ul className="mt-9 space-y-3">
+                {links.map(({ label, value, href, icon: Icon, external }) => (
+                  <li key={label}>
+                    <a
+                      href={href}
+                      {...(external && { target: '_blank', rel: 'noopener noreferrer' })}
+                      className="glass group flex items-center gap-4 rounded-2xl p-3 pr-5 transition hover:bg-white/90"
+                    >
+                      <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-ink text-white">
+                        <Icon className="h-[18px] w-[18px]" aria-hidden="true" />
+                      </span>
+                      <span className="min-w-0 flex-1">
+                        <span className="block text-xs font-medium text-muted">{label}</span>
+                        <span className="block truncate font-semibold">{value}</span>
+                      </span>
+                      <ArrowUpRight className="h-4 w-4 shrink-0 text-muted transition-transform group-hover:rotate-45" aria-hidden="true" />
                     </a>
-                  ) : (
-                    value
-                  )}
-                </dd>
+                  </li>
+                ))}
+              </ul>
+              <button
+                type="button"
+                onClick={copyEmail}
+                className="mt-4 inline-flex items-center gap-2 px-1 text-sm font-medium text-muted transition-colors hover:text-ink"
+              >
+                {copied ? <Check className="h-4 w-4 text-emerald-600" /> : <Copy className="h-4 w-4" />}
+                <span aria-live="polite">{copied ? 'email copied!' : 'copy email address'}</span>
+              </button>
+            </div>
+
+            <form onSubmit={onSubmit} className="glass self-start rounded-[2rem] p-6 sm:p-8">
+              <p className="text-lg font-bold">Send a note</p>
+              <p className="mt-1 text-sm text-muted">Opens in your email app, pre-filled.</p>
+              <div className="mt-6 space-y-4">
+                <label className="block">
+                  <span className="mb-1.5 block text-sm font-semibold">Your name</span>
+                  <input required name="name" value={form.name} onChange={update} placeholder="Jane Doe" autoComplete="name" className={field} />
+                </label>
+                <label className="block">
+                  <span className="mb-1.5 block text-sm font-semibold">Subject</span>
+                  <input name="subject" value={form.subject} onChange={update} placeholder="Internship opportunity" className={field} />
+                </label>
+                <label className="block">
+                  <span className="mb-1.5 block text-sm font-semibold">Message</span>
+                  <textarea required name="message" rows={5} value={form.message} onChange={update} placeholder="Hi Aakifah, …" className={`${field} resize-y`} />
+                </label>
               </div>
-            ))}
-          </dl>
-          <button
-            type="button"
-            onClick={copyEmail}
-            className="mt-8 inline-flex items-center gap-2 text-sm text-white/60 transition-colors hover:text-white"
-          >
-            {copied ? <Check className="h-4 w-4 text-accent" /> : <Copy className="h-4 w-4" />}
-            <span aria-live="polite">{copied ? 'Email copied' : 'Copy email address'}</span>
-          </button>
-        </Reveal>
-      </div>
-    </Section>
+              <button
+                type="submit"
+                className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-ink px-6 py-3.5 text-sm font-semibold text-white shadow-[0_10px_30px_-10px_rgb(31_29_43/0.55)] transition hover:-translate-y-0.5 hover:bg-[#2d2a3e] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lavender-deep"
+              >
+                <Send className="h-4 w-4" aria-hidden="true" />
+                send message
+              </button>
+            </form>
+          </div>
+        </div>
+      </Reveal>
+    </section>
   );
 }

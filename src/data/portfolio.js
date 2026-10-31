@@ -138,39 +138,6 @@ export const projects = [
     demo: null,
   },
   {
-    title: 'University Course Assistant',
-    subtitle: 'RAG over Custom Course Data',
-    description:
-      'A Retrieval-Augmented Generation system that answers questions about university courses. Course information is stored as Sentence Transformer embeddings in a Qdrant vector database; the most relevant entries are retrieved and passed as context to Llama 3.2 running through Ollama.',
-    tech: ['Python', 'RAG', 'Sentence Transformers', 'Qdrant', 'Ollama', 'Llama 3.2'],
-    pipeline: ['Question', 'Embedding', 'Qdrant search', 'Llama 3.2 answer'],
-    status: 'completed',
-    github: 'https://github.com/Aakifah09/rag',
-    demo: null,
-  },
-  {
-    title: 'Semantic Text Retrieval',
-    subtitle: 'Search by Meaning with Sentence Embeddings',
-    description:
-      'A semantic search system that returns the top-k most similar sentences for a query using Sentence-BERT (all-MiniLM-L6-v2) embeddings and cosine similarity, so results match on meaning rather than keywords. Evaluated with manual relevance checks on 20 queries.',
-    tech: ['Python', 'Sentence-BERT', 'NLP', 'Cosine Similarity', 'Jupyter Notebook'],
-    pipeline: ['Sentences', 'SBERT embeddings', 'Cosine similarity', 'Top-k results'],
-    status: 'completed',
-    github: 'https://github.com/Aakifah09/Semantic-Text-Retrieval-using-Sentence-Embeddings',
-    demo: null,
-  },
-  {
-    title: 'Encryption & Decryption System',
-    subtitle: 'AES, DES & Triple DES in Object-Oriented Java',
-    description:
-      'A Java application that encrypts and decrypts text with AES, DES, and Triple DES via the Java Cryptography Architecture. Each algorithm lives in its own class behind a common interface, demonstrating encapsulation, abstraction, and polymorphism.',
-    tech: ['Java', 'JCA', 'OOP', 'Cryptography'],
-    pipeline: ['Plaintext', 'Choose cipher', 'AES / DES / 3DES', 'Ciphertext'],
-    status: 'completed',
-    github: 'https://github.com/Aakifah09/InnoXCode-Oops-project',
-    demo: null,
-  },
-  {
     title: 'Invoice & Barcode Automation',
     subtitle: 'Zoho Creator + Zoho Books Integration (Internship)',
     description:
@@ -187,6 +154,8 @@ export const experience = [
   {
     role: 'ERP Systems Developer Intern',
     company: 'SmartLife Foundation',
+    // Company logo inside /public (shown in place of initials). Omit to show initials.
+    logo: 'logos/smartlife.svg',
     period: 'Sep 2025 – Feb 2026',
     points: [
       'Worked on an ERP-integrated chatbot, focusing on inventory data preprocessing, backend development, and conversational workflow management.',
@@ -199,6 +168,7 @@ export const experience = [
   {
     role: 'Software Engineer Intern',
     company: 'Codelattice',
+    logo: 'logos/codelattice.png',
     period: 'Jun 2025 – Aug 2025',
     points: [
       'Automated invoice processing and barcode-based product labelling by integrating Zoho Creator with Zoho Books through Deluge scripting and APIs.',

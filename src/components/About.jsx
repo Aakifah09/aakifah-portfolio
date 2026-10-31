@@ -3,60 +3,60 @@ import { about, education, profile } from '../data/portfolio.js';
 import Button from './ui/Button.jsx';
 import Reveal from './ui/Reveal.jsx';
 import Section from './ui/Section.jsx';
-import Wipe from './ui/Wipe.jsx';
+import { pastel } from './ui/palette.js';
 
 const initials = profile.name
   .split(' ')
   .map((w) => w[0])
   .join('');
 
-// Stands in for the template's portrait photo. Drop a real photo in /public and swap this for an <img> if you like.
-function Portrait() {
+// Polaroid-style card standing in for a photo. Swap the gradient block for an <img> to use a real one.
+function Polaroid() {
   return (
-    <div className="relative aspect-[4/5] w-full overflow-hidden bg-[linear-gradient(160deg,#2b2b2b_0%,#0e0e0e_70%)]">
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 opacity-[0.08]"
-        style={{ backgroundImage: 'radial-gradient(#fff 1px, transparent 1px)', backgroundSize: '18px 18px' }}
-      />
-      <span
-        aria-hidden="true"
-        className="absolute inset-0 grid place-items-center font-black text-[9rem] leading-none text-transparent sm:text-[11rem]"
-        style={{ WebkitTextStroke: '2px rgb(255 255 255 / 0.85)' }}
-      >
-        {initials}
+    <div className="relative mx-auto w-full max-w-[360px]">
+      <div className="glass rotate-[-3deg] rounded-[2rem] p-3 pb-6 transition-transform duration-500 hover:rotate-0">
+        <div className="relative grid aspect-[4/5] place-items-center overflow-hidden rounded-[1.5rem] bg-gradient-to-br from-lavender via-rose to-peach">
+          <span aria-hidden="true" className="absolute -left-10 top-10 h-40 w-40 rounded-full bg-sky blur-2xl" />
+          <span aria-hidden="true" className="absolute -bottom-10 right-0 h-40 w-40 rounded-full bg-butter blur-2xl" />
+          <span className="accent relative text-[8rem] leading-none text-white">{initials}</span>
+        </div>
+        <p className="accent mt-4 text-center text-2xl">{profile.name}</p>
+      </div>
+      <span className="glass absolute -right-3 top-8 rotate-6 rounded-full px-4 py-2 text-sm font-semibold">Dubai ✦</span>
+      <span className="glass absolute -left-4 bottom-20 -rotate-6 rounded-full px-4 py-2 text-sm font-semibold">
+        {education[0]?.school.split(',')[0]} &rsquo;{education[0]?.period.slice(-2)}
       </span>
-      <span className="absolute bottom-6 left-6 font-alt text-[11px] font-bold uppercase tracking-[0.1rem] text-white/60">
-        Dubai · {education[0].school.split(',')[0]}
-      </span>
-      <span aria-hidden="true" className="absolute bottom-0 left-0 h-1.5 w-1/3 bg-accent" />
     </div>
   );
 }
 
 export default function About() {
   return (
-    <Section id="about" title="About Me">
-      <div className="grid items-center gap-12 lg:grid-cols-[5fr_7fr] lg:gap-16">
-        <Wipe className="mx-auto w-full max-w-[420px]">
-          <Portrait />
-        </Wipe>
-
+    <Section
+      id="about"
+      eyebrow="about me"
+      title={
+        <>
+          A little bit <em className="accent text-lavender-deep">about me</em>
+        </>
+      }
+    >
+      <div className="grid items-center gap-16 lg:grid-cols-[1fr_1.35fr]">
         <Reveal>
-          <h3 className="text-[26px] font-black leading-snug">
-            Computer Science undergraduate building where models meet real software.
-          </h3>
-          <div className="mt-6 space-y-5 text-white/75">
+          <Polaroid />
+        </Reveal>
+
+        <Reveal delay={0.1}>
+          <div className="space-y-5 text-lg leading-relaxed text-muted">
             {about.paragraphs.map((p) => (
               <p key={p.slice(0, 24)}>{p}</p>
             ))}
           </div>
 
-          <p className="mt-8 font-alt text-[11px] font-bold uppercase tracking-[0.1rem] text-white/50">Interested in</p>
-          <ul className="mt-3 grid gap-x-6 gap-y-1 sm:grid-cols-2">
-            {about.interests.map(({ label }) => (
-              <li key={label} className="flex items-center gap-3 text-[15px]">
-                <span aria-hidden="true" className="h-px w-4 bg-accent" />
+          <p className="mt-9 text-sm font-semibold text-ink">things I love exploring</p>
+          <ul className="mt-3 flex flex-wrap gap-2">
+            {about.interests.map(({ label }, i) => (
+              <li key={label} className="rounded-full px-4 py-2 text-sm font-semibold" style={{ background: pastel(i).bg, color: pastel(i).ink }}>
                 {label}
               </li>
             ))}
@@ -64,7 +64,7 @@ export default function About() {
 
           <div className="mt-10">
             <Button href={profile.resume} download={profile.resumeDownloadName} icon={Download}>
-              Download my CV
+              download my cv
             </Button>
           </div>
         </Reveal>

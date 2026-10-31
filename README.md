@@ -1,8 +1,8 @@
 # Aakifah Minhaj — Portfolio
 
-Personal portfolio website, styled after the [Unfold](https://preview.themewagon.com/unfold/) template (black, Raleway, crimson accent), built with **React**, **Vite**, **Tailwind CSS v4**, **Framer Motion**, and **Lucide** icons. It's a static single-page site with no backend.
+Personal portfolio website, with a soft pastel design (warm off-white, lavender/peach/mint blobs, frosted glass cards, Plus Jakarta Sans + Instrument Serif), built with **React**, **Vite**, **Tailwind CSS v4**, **Framer Motion**, and **Lucide** icons. It's a static single-page site with no backend.
 
-Features: an Unfold-style split navbar with centered logo, crimson "wipe" reveal animations, a project grid with detail dialogs, a responsive layout, active-section navigation, a mobile menu, scroll-reveal animations that respect the OS "reduce motion" setting, SEO metadata, and a contact form that opens a pre-filled email.
+Features: a floating glass navbar, project cards with detail dialogs, an ongoing-research section, a responsive layout, active-section navigation, a mobile menu, scroll-reveal animations that respect the OS "reduce motion" setting, SEO metadata, and a contact form that opens a pre-filled email.
 
 ## Run locally
 

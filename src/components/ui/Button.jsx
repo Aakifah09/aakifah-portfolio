@@ -1,19 +1,19 @@
 const base =
-  'inline-flex items-center justify-center gap-2 rounded-full px-[30px] py-[15px] text-[11px] font-black uppercase tracking-[0.1rem] transition-all duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent';
+  'inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-all duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lavender-deep';
 
 const variants = {
-  // white outline pill that fills white on hover (Unfold's default button)
-  outline: 'border-2 border-white/50 text-white hover:border-white hover:bg-white hover:text-black',
-  // solid crimson pill
-  accent: 'border-2 border-accent bg-accent text-white hover:border-white hover:bg-white hover:text-black',
+  // soft-black pill
+  dark: 'bg-ink text-white shadow-[0_10px_30px_-10px_rgb(31_29_43/0.55)] hover:-translate-y-0.5 hover:bg-[#2d2a3e]',
+  // frosted white pill
+  light: 'glass text-ink hover:-translate-y-0.5 hover:bg-white',
 };
 
 /** Pill link-button. `href={null}` renders a disabled placeholder with `disabledLabel`. */
-export default function Button({ href, variant = 'outline', icon: Icon, external = false, disabledLabel, className = '', children, ...props }) {
+export default function Button({ href, variant = 'dark', icon: Icon, external = false, disabledLabel, className = '', children, ...props }) {
   if (!href) {
     return (
-      <span aria-disabled="true" className={`${base} cursor-not-allowed border-2 border-dashed border-white/20 text-white/40 ${className}`}>
-        {Icon && <Icon className="h-3.5 w-3.5" aria-hidden="true" />}
+      <span aria-disabled="true" className={`${base} cursor-not-allowed border border-dashed border-ink/15 text-muted ${className}`}>
+        {Icon && <Icon className="h-4 w-4" aria-hidden="true" />}
         {disabledLabel || children}
       </span>
     );
@@ -26,7 +26,7 @@ export default function Button({ href, variant = 'outline', icon: Icon, external
       {...(external && { target: '_blank', rel: 'noopener noreferrer' })}
       {...props}
     >
-      {Icon && <Icon className="h-3.5 w-3.5" aria-hidden="true" />}
+      {Icon && <Icon className="h-4 w-4" aria-hidden="true" />}
       {children}
     </a>
   );

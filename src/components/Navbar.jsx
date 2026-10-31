@@ -1,38 +1,18 @@
 import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
+import { Menu, X } from 'lucide-react';
 import { navLinks, profile } from '../data/portfolio.js';
 import { useActiveSection } from '../hooks/useActiveSection.js';
 
-const sectionIds = navLinks.map((l) => l.id);
-const half = Math.ceil(navLinks.length / 2);
-const firstName = profile.name.split(' ')[0];
+const sectionIds = ['top', ...navLinks.map((l) => l.id)];
+const firstName = profile.name.split(' ')[0].toLowerCase();
 
 export function Logo({ className = '' }) {
   return (
-    <span className={`font-black ${className}`}>
+    <span className={`font-bold tracking-tight ${className}`}>
       {firstName}
-      <span className="text-accent">.</span>
+      <span className="text-lavender-deep">.</span>
     </span>
-  );
-}
-
-function NavList({ links, active, dark }) {
-  return (
-    <ul className="flex items-center">
-      {links.map((link) => (
-        <li key={link.id}>
-          <a
-            href={`#${link.id}`}
-            aria-current={active === link.id ? 'true' : undefined}
-            className={`nav-underline block px-[0.45rem] py-2.5 text-sm font-normal transition-colors ${
-              dark ? 'text-black/70 hover:text-black aria-[current=true]:text-black' : 'text-white/80 hover:text-white aria-[current=true]:text-white'
-            }`}
-          >
-            {link.label}
-          </a>
-        </li>
-      ))}
-    </ul>
   );
 }
 
@@ -42,8 +22,7 @@ export default function Navbar() {
   const active = useActiveSection(sectionIds);
 
   useEffect(() => {
-    // Swap to the solid white bar once the hero is mostly scrolled past.
-    const onScroll = () => setScrolled(window.scrollY > window.innerHeight * 0.6);
+    const onScroll = () => setScrolled(window.scrollY > 16);
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
@@ -51,100 +30,99 @@ export default function Navbar() {
 
   useEffect(() => {
     if (!open) return;
-    document.body.style.overflow = 'hidden';
     const onKey = (e) => e.key === 'Escape' && setOpen(false);
     window.addEventListener('keydown', onKey);
-    return () => {
-      document.body.style.overflow = '';
-      window.removeEventListener('keydown', onKey);
-    };
+    return () => window.removeEventListener('keydown', onKey);
   }, [open]);
 
   return (
-    <>
-      <header
-        className={`inset-x-0 top-0 z-50 transition-[padding,background-color,box-shadow] duration-300 ${
-          scrolled ? 'nav-drop fixed bg-white py-1.5 shadow-[0_0_10px_rgba(0,0,0,0.1)]' : 'absolute py-7'
+    <header className="fixed inset-x-0 top-0 z-50 px-4 pt-4">
+      <nav
+        aria-label="Primary"
+        className={`mx-auto flex h-14 max-w-5xl items-center justify-between rounded-full pl-6 pr-2 transition-all duration-300 ${
+          scrolled || open ? 'glass' : 'border border-transparent'
         }`}
       >
-        <nav className="relative mx-auto flex h-12 max-w-[1140px] items-center justify-end px-5 sm:px-8 lg:justify-between" aria-label="Primary">
-          <div className="hidden w-[38%] justify-end lg:flex">
-            <NavList links={navLinks.slice(0, half)} active={active} dark={scrolled} />
-          </div>
+        <a href="#top" aria-label={`${profile.name} — back to top`} className="text-xl">
+          <Logo />
+        </a>
 
+        <ul className="hidden items-center gap-1 md:flex">
+          {navLinks.map((link) => (
+            <li key={link.id}>
+              <a
+                href={`#${link.id}`}
+                aria-current={active === link.id ? 'true' : undefined}
+                className={`relative rounded-full px-3.5 py-2 text-sm font-medium lowercase transition-colors ${
+                  active === link.id ? 'text-ink' : 'text-muted hover:text-ink'
+                }`}
+              >
+                {active === link.id && (
+                  <motion.span
+                    layoutId="nav-pill"
+                    className="absolute inset-0 -z-10 rounded-full bg-lavender/45"
+                    transition={{ type: 'spring', bounce: 0.25, duration: 0.5 }}
+                  />
+                )}
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+
+        <div className="flex items-center gap-2">
           <a
-            href="#top"
-            aria-label={`${profile.name} — back to top`}
-            className={`absolute left-1/2 -translate-x-1/2 text-[1.7rem] transition-colors ${scrolled ? 'text-black' : 'text-white'}`}
+            href="#contact"
+            className="hidden rounded-full bg-ink px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-[#2d2a3e] sm:inline-block"
           >
-            <Logo />
+            say hi ✦
           </a>
-
-          <div className="hidden w-[38%] justify-start lg:flex">
-            <NavList links={navLinks.slice(half)} active={active} dark={scrolled} />
-          </div>
-
           <button
             type="button"
-            onClick={() => setOpen(true)}
+            onClick={() => setOpen((o) => !o)}
+            aria-label={open ? 'Close menu' : 'Open menu'}
             aria-expanded={open}
             aria-controls="mobile-menu"
-            className={`text-sm font-normal lg:hidden ${scrolled ? 'text-black' : 'text-white'}`}
+            className="grid h-10 w-10 place-items-center rounded-full text-ink hover:bg-white/70 md:hidden"
           >
-            Menu
+            {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
-        </nav>
-      </header>
+        </div>
+      </nav>
 
-      {/* Off-canvas menu (mobile) */}
       <AnimatePresence>
         {open && (
-          <>
-            <motion.div
-              key="scrim"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setOpen(false)}
-              className="fixed inset-0 z-[60] bg-black/50"
-            />
-            <motion.nav
-              key="panel"
-              id="mobile-menu"
-              aria-label="Mobile"
-              initial={{ x: '100%' }}
-              animate={{ x: 0 }}
-              exit={{ x: '100%' }}
-              transition={{ type: 'tween', duration: 0.35, ease: [0.77, 0, 0.175, 1] }}
-              className="fixed inset-y-0 right-0 z-[70] flex w-[300px] max-w-[85vw] flex-col bg-ink-2 px-8 py-7"
-            >
-              <button type="button" onClick={() => setOpen(false)} className="ml-auto flex items-center gap-3 text-sm text-white/80 hover:text-white">
-                Close
-                <span aria-hidden="true" className="relative h-5 w-5">
-                  <span className="absolute left-0 top-1/2 h-0.5 w-5 rotate-45 bg-white" />
-                  <span className="absolute left-0 top-1/2 h-0.5 w-5 -rotate-45 bg-white" />
-                </span>
-              </button>
-              <a href="#top" onClick={() => setOpen(false)} className="mt-10 text-3xl">
-                <Logo />
-              </a>
-              <ul className="mt-8 space-y-1">
-                {navLinks.map((link, i) => (
-                  <motion.li key={link.id} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.15 + i * 0.05 }}>
-                    <a
-                      href={`#${link.id}`}
-                      onClick={() => setOpen(false)}
-                      className={`block py-2 text-lg ${active === link.id ? 'font-bold text-white' : 'text-white/60 hover:text-white'}`}
-                    >
-                      {link.label}
-                    </a>
-                  </motion.li>
-                ))}
-              </ul>
-            </motion.nav>
-          </>
+          <motion.div
+            id="mobile-menu"
+            initial={{ opacity: 0, y: -8, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -8, scale: 0.98 }}
+            transition={{ duration: 0.2 }}
+            className="glass mx-auto mt-2 max-w-5xl rounded-3xl p-3 md:hidden"
+          >
+            <ul>
+              {navLinks.map((link) => (
+                <li key={link.id}>
+                  <a
+                    href={`#${link.id}`}
+                    onClick={() => setOpen(false)}
+                    className={`block rounded-2xl px-4 py-3 text-base font-medium lowercase ${
+                      active === link.id ? 'bg-lavender/40 text-ink' : 'text-muted'
+                    }`}
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+              <li>
+                <a href="#contact" onClick={() => setOpen(false)} className="mt-1 block rounded-2xl bg-ink px-4 py-3 text-center font-semibold text-white">
+                  say hi ✦
+                </a>
+              </li>
+            </ul>
+          </motion.div>
         )}
       </AnimatePresence>
-    </>
+    </header>
   );
 }
