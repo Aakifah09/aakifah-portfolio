@@ -4,6 +4,8 @@
  *
  * Links:  set a URL string to show a button, or `null` to show a disabled
  *         "coming soon" placeholder instead (never a fake link).
+ * Video:  a YouTube link (unlisted is fine) or a file in /public such as
+ *         'videos/disaster-responder.mp4'. `null` hides the demo button.
  * Status: 'completed' | 'in-progress'
  */
 
@@ -92,6 +94,7 @@ export const projects = [
     status: 'completed',
     github: 'https://github.com/Aakifah09/disaster-responder',
     demo: null,
+    video: null,
   },
   {
     title: 'Enterprise Knowledge Assistant',
@@ -103,6 +106,7 @@ export const projects = [
     status: 'completed',
     github: 'https://github.com/Aakifah09/enterprise-rag-assistant',
     demo: null,
+    video: null,
   },
   {
     title: 'Generative AI Solution Lab',
@@ -114,6 +118,7 @@ export const projects = [
     status: 'completed',
     github: 'https://github.com/Aakifah09/genai-solution-lab',
     demo: null,
+    video: null,
   },
   {
     title: 'Agentic AI Recruiter',
@@ -125,6 +130,7 @@ export const projects = [
     status: 'completed',
     github: 'https://github.com/Aakifah09/agentic-ai-recruiter',
     demo: null,
+    video: null,
   },
   {
     title: 'mltest',
@@ -136,6 +142,7 @@ export const projects = [
     status: 'completed',
     github: 'https://github.com/Aakifah09/ml-testing-framework',
     demo: null,
+    video: null,
   },
   {
     title: 'Invoice & Barcode Automation',
@@ -147,6 +154,7 @@ export const projects = [
     status: 'completed',
     github: 'https://github.com/Aakifah09/Zoho-Invoice-Barcode-Automation',
     demo: null,
+    video: null,
   },
 ];
 

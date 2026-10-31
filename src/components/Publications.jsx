@@ -11,7 +11,7 @@ function Card({ href, kicker, title, meta, note, icon: Icon, tone }) {
     <Tag
       {...(href && { href, target: '_blank', rel: 'noopener noreferrer' })}
       className={`glass group flex h-full flex-col rounded-[2rem] p-7 transition-all duration-300 sm:p-8 ${
-        href ? 'hover:-translate-y-1 hover:bg-white/90 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-lavender-deep' : ''
+        href ? 'hover:-translate-y-1 hover:bg-white/[0.1] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-lavender-deep' : ''
       }`}
     >
       <div className="flex items-start justify-between gap-4">
@@ -19,7 +19,7 @@ function Card({ href, kicker, title, meta, note, icon: Icon, tone }) {
           <Icon className="h-6 w-6" aria-hidden="true" />
         </span>
         {href && (
-          <span className="grid h-9 w-9 place-items-center rounded-full bg-ink text-white transition-transform duration-300 group-hover:rotate-45">
+          <span className="grid h-9 w-9 place-items-center rounded-full bg-ink text-night transition-transform duration-300 group-hover:rotate-45">
             <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
           </span>
         )}

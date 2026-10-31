@@ -23,7 +23,7 @@ function Backdrop() {
       <div className="blob bottom-[0%] -right-[15%] h-[40vw] w-[40vw] opacity-70" style={{ '--blob': 'var(--color-sky)', animationDelay: '-4s' }} />
       {/* fine grain so the gradients feel like paper, not plastic */}
       <div
-        className="absolute inset-0 opacity-[0.035] mix-blend-multiply"
+        className="absolute inset-0 opacity-[0.06] mix-blend-soft-light"
         style={{
           backgroundImage:
             "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",
@@ -45,7 +45,7 @@ export default function App() {
     <MotionConfig reducedMotion="user">
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-ink focus:px-5 focus:py-2 focus:text-white"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-ink focus:px-5 focus:py-2 focus:text-night"
       >
         Skip to content
       </a>

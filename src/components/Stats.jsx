@@ -7,8 +7,8 @@ import { pastel } from './ui/palette.js';
 const stats = [
   { value: projects.length, label: 'Projects Built' },
   { value: experience.length, label: 'Internships' },
-  // published + in-progress papers
-  { value: publications.length + ongoingResearch.length, label: 'Research Papers' },
+  // published papers, with the in-progress ones called out separately
+  { value: publications.length, label: 'Published Paper' + (publications.length === 1 ? '' : 's'), note: `+ ${ongoingResearch.length} in progress` },
   { value: skills.reduce((n, s) => n + s.items.length, 0), suffix: '+', label: 'Tools & Technologies' },
 ];
 
@@ -38,7 +38,14 @@ export default function Stats() {
       <dl className="mx-auto grid max-w-6xl grid-cols-2 gap-4 px-5 sm:px-8 lg:grid-cols-4">
         {stats.map((s, i) => (
           <div key={s.label} className="flex flex-col-reverse rounded-[1.75rem] px-6 py-8 text-center" style={{ background: pastel(i).bg, color: pastel(i).ink }}>
-            <dt className="mt-3 text-sm font-semibold text-ink/70">{s.label}</dt>
+            <dt className="mt-3 text-sm font-semibold text-ink/70">
+              {s.label}
+              {s.note && (
+                <span className="mx-auto mt-2 block w-fit rounded-full bg-white/[0.07] px-3 py-0.5 text-xs font-semibold" style={{ color: pastel(i).ink }}>
+                  {s.note}
+                </span>
+              )}
+            </dt>
             <dd>
               <Counter value={s.value} suffix={s.suffix} />
             </dd>

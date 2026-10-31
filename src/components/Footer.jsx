@@ -23,14 +23,14 @@ export default function Footer() {
                 href={href}
                 {...(external && { target: '_blank', rel: 'noopener noreferrer' })}
                 {...(download && { download })}
-                className="rounded-full px-3.5 py-2 text-sm font-medium text-muted transition-colors hover:bg-white/70 hover:text-ink"
+                className="rounded-full px-3.5 py-2 text-sm font-medium text-muted transition-colors hover:bg-white/[0.1] hover:text-ink"
               >
                 {label}
               </a>
             </li>
           ))}
         </ul>
-        <a href="#top" className="glass inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-semibold hover:bg-white">
+        <a href="#top" className="glass inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-semibold hover:bg-white/15">
           <ArrowUp className="h-4 w-4" aria-hidden="true" />
           back to top
         </a>

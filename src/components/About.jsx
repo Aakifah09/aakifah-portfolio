@@ -1,34 +1,21 @@
 import { Download } from 'lucide-react';
-import { about, education, profile } from '../data/portfolio.js';
+import { about, education, ongoingResearch, profile, publications } from '../data/portfolio.js';
 import Button from './ui/Button.jsx';
 import Reveal from './ui/Reveal.jsx';
 import Section from './ui/Section.jsx';
 import { pastel } from './ui/palette.js';
 
-const initials = profile.name
-  .split(' ')
-  .map((w) => w[0])
-  .join('');
-
-// Polaroid-style card standing in for a photo. Swap the gradient block for an <img> to use a real one.
-function Polaroid() {
-  return (
-    <div className="relative mx-auto w-full max-w-[360px]">
-      <div className="glass rotate-[-3deg] rounded-[2rem] p-3 pb-6 transition-transform duration-500 hover:rotate-0">
-        <div className="relative grid aspect-[4/5] place-items-center overflow-hidden rounded-[1.5rem] bg-gradient-to-br from-lavender via-rose to-peach">
-          <span aria-hidden="true" className="absolute -left-10 top-10 h-40 w-40 rounded-full bg-sky blur-2xl" />
-          <span aria-hidden="true" className="absolute -bottom-10 right-0 h-40 w-40 rounded-full bg-butter blur-2xl" />
-          <span className="accent relative text-[8rem] leading-none text-white">{initials}</span>
-        </div>
-        <p className="accent mt-4 text-center text-2xl">{profile.name}</p>
-      </div>
-      <span className="glass absolute -right-3 top-8 rotate-6 rounded-full px-4 py-2 text-sm font-semibold">Dubai ✦</span>
-      <span className="glass absolute -left-4 bottom-20 -rotate-6 rounded-full px-4 py-2 text-sm font-semibold">
-        {education[0]?.school.split(',')[0]} &rsquo;{education[0]?.period.slice(-2)}
-      </span>
-    </div>
-  );
-}
+const facts = [
+  { label: 'Studying', value: `${education[0]?.degree}`, sub: `${education[0]?.school} · ${education[0]?.period}` },
+  { label: 'Based in', value: 'Dubai, United Arab Emirates' },
+  { label: 'Focus', value: 'AI/ML, Generative AI & full-stack development' },
+  {
+    label: 'Research',
+    value: `${publications.length} published paper${publications.length === 1 ? '' : 's'}`,
+    sub: `+ ${ongoingResearch.length} in progress on single-cell RNA-seq`,
+  },
+  { label: 'Status', value: 'Open to internships', live: true },
+];
 
 export default function About() {
   return (
@@ -41,12 +28,8 @@ export default function About() {
         </>
       }
     >
-      <div className="grid items-center gap-16 lg:grid-cols-[1fr_1.35fr]">
+      <div className="grid items-start gap-12 lg:grid-cols-[1.4fr_1fr] lg:gap-16">
         <Reveal>
-          <Polaroid />
-        </Reveal>
-
-        <Reveal delay={0.1}>
           <div className="space-y-5 text-lg leading-relaxed text-muted">
             {about.paragraphs.map((p) => (
               <p key={p.slice(0, 24)}>{p}</p>
@@ -67,6 +50,27 @@ export default function About() {
               download my cv
             </Button>
           </div>
+        </Reveal>
+
+        {/* quick facts card */}
+        <Reveal delay={0.1}>
+          <dl className="glass divide-y divide-white/[0.07] rounded-[2rem] px-7 py-3">
+            {facts.map(({ label, value, sub, live }) => (
+              <div key={label} className="py-5">
+                <dt className="text-xs font-semibold uppercase tracking-[0.14em] text-lavender-deep">{label}</dt>
+                <dd className="mt-1.5 flex items-center gap-2 font-semibold">
+                  {live && (
+                    <span className="relative flex h-2 w-2" aria-hidden="true">
+                      <span className="absolute inset-0 animate-ping rounded-full bg-emerald-400 opacity-60 motion-reduce:animate-none" />
+                      <span className="relative h-2 w-2 rounded-full bg-emerald-400" />
+                    </span>
+                  )}
+                  {value}
+                </dd>
+                {sub && <dd className="mt-0.5 text-sm text-muted">{sub}</dd>}
+              </div>
+            ))}
+          </dl>
         </Reveal>
       </div>
     </Section>

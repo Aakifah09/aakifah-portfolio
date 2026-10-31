@@ -6,7 +6,7 @@ import { Eyebrow } from './ui/Section.jsx';
 import { GithubIcon, LinkedinIcon } from './ui/icons.jsx';
 
 const field =
-  'w-full rounded-2xl border border-ink/10 bg-white/80 px-4 py-3.5 text-ink placeholder:text-muted/70 transition focus:border-lavender-deep focus:outline-none focus:ring-4 focus:ring-lavender/40';
+  'w-full rounded-2xl border border-ink/10 bg-white/[0.07] px-4 py-3.5 text-ink placeholder:text-muted/70 transition focus:border-lavender-deep focus:outline-none focus:ring-4 focus:ring-lavender/20';
 
 const links = [
   { label: 'Email', value: profile.email, href: `mailto:${profile.email}`, icon: Mail },
@@ -44,9 +44,9 @@ export default function Contact() {
   return (
     <section id="contact" className="scroll-mt-24 px-4 py-20 sm:py-28">
       <Reveal>
-        <div className="relative mx-auto max-w-6xl overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-[#efe9ff] via-[#fdeaf4] to-[#ffeee6] px-6 py-14 sm:px-12 sm:py-16">
-          <span aria-hidden="true" className="absolute -left-16 -top-20 h-72 w-72 rounded-full bg-lavender blur-3xl" />
-          <span aria-hidden="true" className="absolute -bottom-24 right-0 h-72 w-72 rounded-full bg-peach blur-3xl" />
+        <div className="relative mx-auto max-w-6xl overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-[#1d1733] via-[#221429] to-[#2a1a1c] px-6 py-14 sm:px-12 sm:py-16">
+          <span aria-hidden="true" className="absolute -left-16 -top-20 h-72 w-72 rounded-full bg-lavender opacity-25 blur-3xl" />
+          <span aria-hidden="true" className="absolute -bottom-24 right-0 h-72 w-72 rounded-full bg-peach opacity-25 blur-3xl" />
 
           <div className="relative grid gap-12 lg:grid-cols-[1fr_1.1fr] lg:gap-16">
             <div>
@@ -65,9 +65,9 @@ export default function Contact() {
                     <a
                       href={href}
                       {...(external && { target: '_blank', rel: 'noopener noreferrer' })}
-                      className="glass group flex items-center gap-4 rounded-2xl p-3 pr-5 transition hover:bg-white/90"
+                      className="glass group flex items-center gap-4 rounded-2xl p-3 pr-5 transition hover:bg-white/[0.1]"
                     >
-                      <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-ink text-white">
+                      <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-ink text-night">
                         <Icon className="h-[18px] w-[18px]" aria-hidden="true" />
                       </span>
                       <span className="min-w-0 flex-1">
@@ -108,7 +108,7 @@ export default function Contact() {
               </div>
               <button
                 type="submit"
-                className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-ink px-6 py-3.5 text-sm font-semibold text-white shadow-[0_10px_30px_-10px_rgb(31_29_43/0.55)] transition hover:-translate-y-0.5 hover:bg-[#2d2a3e] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lavender-deep"
+                className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-ink px-6 py-3.5 text-sm font-semibold text-night shadow-[0_10px_30px_-10px_rgb(185_166_255/0.35)] transition hover:-translate-y-0.5 hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lavender-deep"
               >
                 <Send className="h-4 w-4" aria-hidden="true" />
                 send message

@@ -60,7 +60,7 @@ export default function Navbar() {
                 {active === link.id && (
                   <motion.span
                     layoutId="nav-pill"
-                    className="absolute inset-0 -z-10 rounded-full bg-lavender/45"
+                    className="absolute inset-0 -z-10 rounded-full bg-lavender/20"
                     transition={{ type: 'spring', bounce: 0.25, duration: 0.5 }}
                   />
                 )}
@@ -73,7 +73,7 @@ export default function Navbar() {
         <div className="flex items-center gap-2">
           <a
             href="#contact"
-            className="hidden rounded-full bg-ink px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-[#2d2a3e] sm:inline-block"
+            className="hidden rounded-full bg-ink px-5 py-2.5 text-sm font-semibold text-night transition hover:bg-white sm:inline-block"
           >
             say hi ✦
           </a>
@@ -83,7 +83,7 @@ export default function Navbar() {
             aria-label={open ? 'Close menu' : 'Open menu'}
             aria-expanded={open}
             aria-controls="mobile-menu"
-            className="grid h-10 w-10 place-items-center rounded-full text-ink hover:bg-white/70 md:hidden"
+            className="grid h-10 w-10 place-items-center rounded-full text-ink hover:bg-white/[0.1] md:hidden"
           >
             {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
@@ -107,7 +107,7 @@ export default function Navbar() {
                     href={`#${link.id}`}
                     onClick={() => setOpen(false)}
                     className={`block rounded-2xl px-4 py-3 text-base font-medium lowercase ${
-                      active === link.id ? 'bg-lavender/40 text-ink' : 'text-muted'
+                      active === link.id ? 'bg-lavender/20 text-ink' : 'text-muted'
                     }`}
                   >
                     {link.label}
@@ -115,7 +115,7 @@ export default function Navbar() {
                 </li>
               ))}
               <li>
-                <a href="#contact" onClick={() => setOpen(false)} className="mt-1 block rounded-2xl bg-ink px-4 py-3 text-center font-semibold text-white">
+                <a href="#contact" onClick={() => setOpen(false)} className="mt-1 block rounded-2xl bg-ink px-4 py-3 text-center font-semibold text-night">
                   say hi ✦
                 </a>
               </li>

@@ -2,10 +2,10 @@ const base =
   'inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-all duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lavender-deep';
 
 const variants = {
-  // soft-black pill
-  dark: 'bg-ink text-white shadow-[0_10px_30px_-10px_rgb(31_29_43/0.55)] hover:-translate-y-0.5 hover:bg-[#2d2a3e]',
-  // frosted white pill
-  light: 'glass text-ink hover:-translate-y-0.5 hover:bg-white',
+  // solid light pill (primary)
+  dark: 'bg-ink text-night shadow-[0_10px_30px_-10px_rgb(185_166_255/0.35)] hover:-translate-y-0.5 hover:bg-white',
+  // frosted glass pill (secondary)
+  light: 'glass text-ink hover:-translate-y-0.5 hover:bg-white/15',
 };
 
 /** Pill link-button. `href={null}` renders a disabled placeholder with `disabledLabel`. */

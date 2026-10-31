@@ -5,7 +5,7 @@ import { pastel } from './ui/palette.js';
 
 function StatusPill({ children }) {
   return (
-    <span className="inline-flex items-center gap-2 rounded-full bg-white/80 px-3.5 py-1 text-xs font-semibold text-ink">
+    <span className="inline-flex items-center gap-2 rounded-full bg-white/[0.07] px-3.5 py-1 text-xs font-semibold text-ink">
       <span className="relative flex h-2 w-2" aria-hidden="true">
         <span className="absolute inset-0 animate-ping rounded-full bg-amber-400 opacity-75 motion-reduce:animate-none" />
         <span className="relative h-2 w-2 rounded-full bg-amber-500" />
@@ -36,7 +36,7 @@ export default function OngoingResearch() {
               <Reveal delay={i * 0.1} className="flex w-full">
                 <article className="relative flex w-full flex-col overflow-hidden rounded-[2rem] p-7 sm:p-9" style={{ background: p.bg }}>
                   <span aria-hidden="true" className="absolute -right-16 -top-16 h-56 w-56 rounded-full blur-3xl" style={{ background: p.blob }} />
-                  <span aria-hidden="true" className="absolute -bottom-20 -left-10 h-48 w-48 rounded-full bg-white/70 blur-3xl" />
+                  <span aria-hidden="true" className="absolute -bottom-20 -left-10 h-48 w-48 rounded-full bg-white/[0.07] blur-3xl" />
 
                   <div className="relative flex flex-wrap items-center justify-between gap-3">
                     <span className="text-sm font-semibold" style={{ color: p.ink }}>
@@ -50,7 +50,7 @@ export default function OngoingResearch() {
 
                   <dl className="relative mt-8 grid grid-cols-3 gap-3">
                     {paper.highlights.map((h) => (
-                      <div key={h.label} className="flex flex-col-reverse rounded-2xl bg-white/75 px-3 py-4 text-center">
+                      <div key={h.label} className="flex flex-col-reverse rounded-2xl bg-white/[0.07] px-3 py-4 text-center">
                         <dt className="mt-1.5 text-xs font-semibold text-muted">{h.label}</dt>
                         <dd className="accent text-3xl leading-none sm:text-4xl" style={{ color: p.ink }}>
                           {h.value}
@@ -61,7 +61,7 @@ export default function OngoingResearch() {
 
                   <ul className="relative mt-6 flex flex-wrap gap-1.5">
                     {paper.tags.map((t) => (
-                      <li key={t} className="rounded-full border border-ink/10 bg-white/50 px-3 py-1 text-xs font-semibold text-ink/75">
+                      <li key={t} className="rounded-full border border-ink/10 bg-white/[0.07] px-3 py-1 text-xs font-semibold text-ink/75">
                         {t}
                       </li>
                     ))}

@@ -1,15 +1,15 @@
 @import 'tailwindcss';
 
-/* Soft pastel theme: warm off-white, dreamy lavender/peach/mint blobs, rounded glass cards. */
+/* Dark pastel theme: midnight-plum base, glowing lavender/peach/mint blobs, frosted dark glass cards. */
 @theme {
   --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-serif: 'Instrument Serif', ui-serif, Georgia, serif;
 
-  --color-cream: #fbfaf8;
-  --color-ink: #1f1d2b;
-  --color-muted: #6b6878;
+  --color-night: #0e0c15;
+  --color-ink: #f3f0fa;
+  --color-muted: #a29eb6;
   --color-lavender: #c9b8ff;
-  --color-lavender-deep: #6d55d9;
+  --color-lavender-deep: #b9a6ff;
   --color-peach: #ffc4ac;
   --color-mint: #b4e6cf;
   --color-sky: #b8ceff;
@@ -29,7 +29,7 @@ html {
 
 ::selection {
   background: var(--color-lavender);
-  color: var(--color-ink);
+  color: var(--color-night);
 }
 
 /* Serif italic accent word inside sans headlines: "building <em>intelligent</em> software". */
@@ -42,11 +42,11 @@ html {
 
 /* Frosted glass card used across sections. */
 .glass {
-  background: rgb(255 255 255 / 0.62);
-  border: 1px solid rgb(255 255 255 / 0.9);
+  background: rgb(255 255 255 / 0.045);
+  border: 1px solid rgb(255 255 255 / 0.09);
   box-shadow:
-    0 1px 0 rgb(255 255 255 / 0.8) inset,
-    0 18px 50px -24px rgb(76 56 140 / 0.28);
+    0 1px 0 rgb(255 255 255 / 0.06) inset,
+    0 24px 60px -28px rgb(0 0 0 / 0.7);
   backdrop-filter: blur(18px) saturate(1.4);
   -webkit-backdrop-filter: blur(18px) saturate(1.4);
 }
@@ -61,7 +61,7 @@ html {
   position: absolute;
   border-radius: 9999px;
   background: radial-gradient(circle, var(--blob) 0%, color-mix(in srgb, var(--blob) 45%, transparent) 40%, transparent 70%);
-  opacity: 0.85;
+  opacity: 0.32;
   animation: drift 22s ease-in-out infinite;
   will-change: transform;
 }
