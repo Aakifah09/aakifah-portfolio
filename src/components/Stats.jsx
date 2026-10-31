@@ -1,12 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
 import { animate, useInView, useReducedMotion } from 'framer-motion';
-import { experience, projects, publications, skills } from '../data/portfolio.js';
+import { experience, ongoingResearch, projects, publications, skills } from '../data/portfolio.js';
 
 // Every number is derived from portfolio.js, so it stays true as the data changes.
 const stats = [
   { value: projects.length, label: 'Projects Built' },
   { value: experience.length, label: 'Internships' },
-  { value: publications.length, label: 'Research Paper' + (publications.length === 1 ? '' : 's') },
+  // published + in-progress papers
+  { value: publications.length + ongoingResearch.length, label: 'Research Papers' },
   { value: skills.reduce((n, s) => n + s.items.length, 0), suffix: '+', label: 'Tools & Technologies' },
 ];
 

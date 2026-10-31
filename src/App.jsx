@@ -8,6 +8,7 @@ import About from './components/About.jsx';
 import Skills from './components/Skills.jsx';
 import Stats from './components/Stats.jsx';
 import Experience from './components/Experience.jsx';
+import OngoingResearch from './components/OngoingResearch.jsx';
 import Publications from './components/Publications.jsx';
 import Contact from './components/Contact.jsx';
 import Footer from './components/Footer.jsx';
@@ -48,6 +49,7 @@ export default function App() {
           <Skills />
           <Stats />
           <Experience />
+          <OngoingResearch />
           <Publications />
           <Contact />
         </main>

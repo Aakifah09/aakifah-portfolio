@@ -11,7 +11,7 @@ import { GithubIcon } from './ui/icons.jsx';
 const tints = ['#5a1620', '#123a3f', '#4a3512', '#22224d', '#3d1240', '#183d22'];
 
 // Generated cover art: the project's pipeline drawn as a node diagram.
-function Cover({ project, index, badge = true }) {
+function Cover({ project, index }) {
   const tint = tints[index % tints.length];
   return (
     <div
@@ -32,11 +32,6 @@ function Cover({ project, index, badge = true }) {
           </li>
         ))}
       </ol>
-      {badge && project.status === 'research' && (
-        <span className="absolute right-5 top-5 bg-accent px-2.5 py-0.5 font-alt text-[10px] font-bold uppercase tracking-[0.12em] text-white">
-          Research
-        </span>
-      )}
       <span
         aria-hidden="true"
         className="absolute -bottom-6 right-4 font-alt text-[9rem] font-bold leading-none text-transparent sm:text-[11rem]"
@@ -91,7 +86,7 @@ function ProjectDialog({ project, index, onClose }) {
           <X className="h-5 w-5" />
         </button>
         <div className="overflow-hidden">
-          <Cover project={project} index={index} badge={false} />
+          <Cover project={project} index={index} />
         </div>
         <div className="p-7 sm:p-10">
           <p className="font-alt text-xs uppercase tracking-[0.1rem] text-white/50">{project.subtitle}</p>
@@ -141,7 +136,7 @@ export default function Projects() {
               >
                 <Cover project={project} index={i} />
                 <span className="tile-overlay absolute inset-0 bg-black/50 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100">
-                  {project.status !== 'research' && <Link2 className="absolute right-5 top-5 h-5 w-5" aria-hidden="true" />}
+                  <Link2 className="absolute right-5 top-5 h-5 w-5" aria-hidden="true" />
                   <span className="absolute inset-x-5 bottom-5">
                     <span className="block text-lg font-bold">{project.title}</span>
                     <span className="block font-alt text-xs text-white/50">{project.tech.slice(0, 4).join(', ').toLowerCase()}</span>

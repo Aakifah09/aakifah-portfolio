@@ -4,7 +4,7 @@
  *
  * Links:  set a URL string to show a button, or `null` to show a disabled
  *         "coming soon" placeholder instead (never a fake link).
- * Status: 'completed' | 'in-progress' | 'research'
+ * Status: 'completed' | 'in-progress'
  */
 
 export const profile = {
@@ -33,7 +33,7 @@ export const about = {
   paragraphs: [
     "I'm a Computer Science undergraduate at BITS Pilani, Dubai Campus, with a strong interest in AI/ML and full-stack development. Most of what I build sits where models meet real software — LLM-powered applications, retrieval pipelines, and agentic workflows connected to actual APIs, databases, and interfaces.",
     "I've built AI-powered applications with Python, LangGraph, and Retrieval-Augmented Generation, and I've studied the foundations underneath them: machine learning, deep learning, and generative models such as GANs, VAEs, and diffusion models. I enjoy taking a practical problem, experimenting until something works, and turning it into an application people can use.",
-    "I also do research in computational biology: I benchmarked 20 dimensionality-reduction methods across 38 single-cell RNA-seq datasets for a review paper, and designed my own single-cell clustering method, scCoRGI.",
+    "I also do research in computational biology: I'm writing a comparative evaluation of 20 dimensionality-reduction methods across 38 single-cell RNA-seq datasets, and a paper on scCoRGI, my own deep-learning method for single-cell clustering.",
   ],
   interests: [
     { label: 'Artificial Intelligence' },
@@ -82,17 +82,6 @@ export const skills = [
 ];
 
 export const projects = [
-  {
-    title: 'scCoRGI',
-    subtitle: 'My Own Single-Cell Clustering Method (Research)',
-    description:
-      "An unsupervised clustering method I designed for single-cell RNA-seq data. A zero-inflated negative binomial (ZINB) autoencoder weights each cell's training loss by a learned confidence score, and a graph autoencoder refines the cell–cell neighbour graph before Leiden clustering. Benchmarked against 10 published methods on 38 datasets: mean ARI 56.5%, NMI 72.8% and purity 83.6% (3rd of 11 on ARI and NMI, 2nd on purity), +10.6 ARI points over scPhere and +15.9 over DREAM, and it completed all 38 datasets without failure.",
-    tech: ['Python', 'PyTorch', 'ZINB Autoencoder', 'Graph Neural Networks', 'Scanpy', 'Leiden'],
-    pipeline: ['Raw counts', 'ZINB autoencoder', 'GNN graph refinement', 'Leiden clusters'],
-    status: 'research',
-    github: null,
-    demo: null,
-  },
   {
     title: 'DisasterResponder',
     subtitle: 'Automated Incident Triage & Emergency Response System',
@@ -220,17 +209,37 @@ export const experience = [
   },
 ];
 
-export const publications = [
+// Papers currently being written. Shown in the "Ongoing Research" section.
+export const ongoingResearch = [
   {
-    title: 'Benchmarking Dimensionality Reduction for Single-Cell RNA-seq: 20 Methods Across 38 Datasets',
-    journal: 'Single-cell RNA-seq benchmark',
-    publisher: null,
-    date: '2026',
-    type: 'Review paper · in preparation',
-    doi: null,
-    contribution:
-      'Benchmarked 20 dimensionality-reduction methods — autoencoder, VAE, GAN and graph-based models alongside classical approaches — on 38 single-cell RNA-seq datasets under identical preprocessing, comparing ARI, NMI, accuracy, purity, runtime and memory.',
+    title: 'Comparative Evaluation of Dimensionality Reduction Methods for Single-Cell RNA Sequencing Data',
+    kind: 'Review paper',
+    status: 'In progress',
+    description:
+      'A benchmark of 20 dimensionality-reduction methods — autoencoder, VAE, GAN and graph-based deep-learning models alongside classical approaches — on 38 single-cell RNA-seq datasets under identical preprocessing, comparing clustering quality, runtime and memory.',
+    highlights: [
+      { value: '20', label: 'Methods' },
+      { value: '38', label: 'Datasets' },
+      { value: '6', label: 'Metrics' },
+    ],
+    tags: ['Autoencoders', 'VAEs', 'GANs', 'GNNs', 'ARI · NMI · Purity'],
   },
+  {
+    title: 'scCoRGI: Deep Learning for Single-Cell Clustering',
+    kind: 'Method paper',
+    status: 'In progress',
+    description:
+      "My own unsupervised clustering method. A zero-inflated negative binomial (ZINB) autoencoder weights each cell's training loss by a learned confidence score, and a graph autoencoder refines the cell–cell neighbour graph before Leiden clustering. Against 10 published methods on 38 datasets it ranks 3rd of 11 on ARI and NMI and 2nd on purity, beating the VAE baselines scPhere (+10.6 ARI) and DREAM (+15.9 ARI).",
+    highlights: [
+      { value: '56.5%', label: 'Mean ARI' },
+      { value: '83.6%', label: 'Purity' },
+      { value: '38/38', label: 'Datasets run' },
+    ],
+    tags: ['PyTorch', 'ZINB Autoencoder', 'Graph Neural Networks', 'Scanpy', 'Leiden'],
+  },
+];
+
+export const publications = [
   {
     title:
       'Next-Generation Wearable, Ingestible and Implantable Bioelectronics for Health Monitoring, Therapy and Human–Machine Interaction',

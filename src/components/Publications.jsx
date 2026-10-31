@@ -34,7 +34,7 @@ function Tile({ href, kicker, title, meta, icon: Icon, tint }) {
 
 export default function Publications() {
   return (
-    <Section id="research" title="Research & Education">
+    <Section id="publications" title="Publications & Education">
       <ul className="grid gap-7 md:grid-cols-2">
         {publications.map((pub) => (
           <li key={pub.title}>
