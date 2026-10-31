@@ -1,0 +1,98 @@
+@import 'tailwindcss';
+
+/* Unfold-inspired theme: pure black, Raleway, a single crimson accent. */
+@theme {
+  --font-sans: 'Raleway', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-alt: 'Arimo', ui-sans-serif, system-ui, sans-serif;
+
+  --color-accent: #d63447;
+  --color-ink: #000000;
+  --color-ink-2: #121212;
+  --color-panel: #212121;
+  --color-rule: #222222;
+}
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: dark;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  font-weight: 300;
+  line-height: 1.9;
+  /* Raleway defaults to old-style figures, which make "09" read like "o9". */
+  font-variant-numeric: lining-nums;
+}
+
+::selection {
+  background: var(--color-accent);
+  color: #fff;
+}
+
+/* The three vertical guide lines that run behind every section. */
+.lines-inner {
+  border-left: 1px solid var(--color-rule);
+  border-right: 1px solid var(--color-rule);
+}
+.lines-inner::before {
+  content: '';
+  position: absolute;
+  inset: 0 33.3333%;
+  border-left: 1px solid var(--color-rule);
+  border-right: 1px solid var(--color-rule);
+}
+
+/* Nav link underline that grows on hover / when active. */
+.nav-underline {
+  position: relative;
+}
+.nav-underline::before {
+  content: '';
+  position: absolute;
+  left: 0.45rem;
+  bottom: 0.2rem;
+  height: 1px;
+  width: 0;
+  background: currentColor;
+  transition: width 0.2s ease-in-out;
+}
+.nav-underline:hover::before,
+.nav-underline[aria-current='true']::before {
+  width: calc(100% - 0.9rem);
+}
+
+/* The sticky nav drops in from above once the hero is passed. */
+@keyframes nav-drop {
+  from { transform: translateY(-100%); }
+  to { transform: translateY(0); }
+}
+.nav-drop {
+  animation: nav-drop 0.35s ease-out;
+}
+
+/* Hero "mouse" scroll cue. */
+@keyframes finger {
+  0% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(20px); }
+}
+.mouse-scroll {
+  animation: finger 2s infinite;
+}
+
+/* Project tile overlays: hover on pointer devices, always visible on touch. */
+@media (hover: none) {
+  .tile-overlay {
+    opacity: 1 !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mouse-scroll,
+  .nav-drop { animation: none; }
+}
